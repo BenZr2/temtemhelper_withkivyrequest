@@ -18,11 +18,11 @@ class MyGrid(GridLayout):
         self.on_start()
 
         self.display_data1 = (
-            Label(text='Input name of tem: ', font_size='5sp'))
+            Label(text='Input tem: ', font_size='25sp'))
         self.add_widget(self.display_data1)
 
         self.display_data2 = (
-            Label(text='Input name of tem: ', font_size='5sp'))
+            Label(text='Input tem: ', font_size='25sp'))
         self.add_widget(self.display_data2)
 
         self.inputName = TextInput(multiline=False, size_hint=(0.5, 0.4))
