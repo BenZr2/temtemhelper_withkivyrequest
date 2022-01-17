@@ -6,7 +6,7 @@ from kivy.uix.gridlayout import GridLayout
 from kivy.uix.textinput import TextInput
 from kivy.uix.button import Button
 from kivy.network.urlrequest import UrlRequest
-
+import certifi as cfi
 from weakness import weakness
 
 
@@ -25,6 +25,14 @@ class MyGrid(GridLayout):
             Label(text='Input tem: ', font_size='25sp'))
         self.add_widget(self.display_data2)
 
+        self.button1 = Button(text='Press')
+        self.button1.bind(on_press=self.on_enter)
+        self.add_widget(self.button1)
+
+        self.button2 = Button(text='Press')
+        self.button2.bind(on_press=self.on_enter2)
+        self.add_widget(self.button2)
+
         self.inputName = TextInput(multiline=False, size_hint=(0.5, 0.4))
         self.inputName.bind(on_text_validate=self.on_enter)
         self.add_widget(self.inputName)
@@ -35,7 +43,7 @@ class MyGrid(GridLayout):
 
     def on_start(self, *args):
         req = UrlRequest(
-            'https://temtem-api.mael.tech/api/temtems', self.got_json)
+            'https://temtem-api.mael.tech/api/temtems', self.got_json, ca_file=cfi.where(), verify=True)
 
     def got_json(self, req, result):
         self.tem_data = [*result]
