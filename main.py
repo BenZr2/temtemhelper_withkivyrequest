@@ -1,4 +1,3 @@
-from dataclasses import dataclass
 import kivy
 from kivy.app import App
 from kivy.uix.label import Label
@@ -6,23 +5,22 @@ from kivy.uix.gridlayout import GridLayout
 from kivy.uix.textinput import TextInput
 from kivy.uix.button import Button
 from kivy.network.urlrequest import UrlRequest
-import certifi as cfi
+
 from weakness import weakness
+from tem_data import tem_data
 
 
 class MyGrid(GridLayout):
     def __init__(self, **kwargs):
         super(MyGrid, self).__init__(**kwargs)
         self.cols = 2
-        self.tem_data = []
-        self.on_start()
 
         self.display_data1 = (
-            Label(text='Input tem: ', font_size='25sp'))
+            Label(text='Input tem ', font_size='15sp'))
         self.add_widget(self.display_data1)
 
         self.display_data2 = (
-            Label(text='Input tem: ', font_size='25sp'))
+            Label(text='Input tem ', font_size='15sp'))
         self.add_widget(self.display_data2)
 
         self.button1 = Button(text='Press')
@@ -40,14 +38,6 @@ class MyGrid(GridLayout):
         self.inputName2 = TextInput(multiline=False, size_hint=(0.5, 0.4))
         self.inputName2.bind(on_text_validate=self.on_enter2)
         self.add_widget(self.inputName2)
-
-    def on_start(self, *args):
-        req = UrlRequest(
-            'https://temtem-api.mael.tech/api/temtems', self.got_json, ca_file=cfi.where(), verify=True)
-
-    def got_json(self, req, result):
-        self.tem_data = [*result]
-        # print(self.tem_data[0])
 
     def on_enter(self, instance):
         temName = self.inputName.text
@@ -107,12 +97,12 @@ class MyGrid(GridLayout):
         search_temtem = temName
         output = []
         for i in range(164):
-            if search_temtem.lower() == self.tem_data[i]['name'].lower():
+            if search_temtem.lower() == tem_data[i]['name'].lower():
                 output_multiplicator = {'neutral': 1, 'wind': 1, 'earth': 1, 'water': 1, 'fire': 1,
                                         'nature': 1, 'electric': 1, 'mental': 1, 'digital': 1, 'melee': 1, 'crystal': 1, 'toxic': 1, }
-                temtem_name = self.tem_data[i]['name']
+                temtem_name = tem_data[i]['name']
                 print('Name: ' + temtem_name)
-                temtem_type = self.tem_data[i]['types']
+                temtem_type = tem_data[i]['types']
                 print('Types: ', end='')
                 print(temtem_type)
 
